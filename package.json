@@ -1,0 +1,12 @@
+{
+  "name": "3sketch_display",
+  "version": "0.0.1",
+  "description": "The part of 3sketch that makes the stuff that runs in the iframe.",
+  "main": "server.js",
+  "repository": "",
+  "author": "Scott Ewart <>",
+  "dependencies": {
+    "express": "~3.2.4",
+    "jade": "1.3.1"
+  }
+}
