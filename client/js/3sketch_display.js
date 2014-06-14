@@ -63,11 +63,10 @@ function setupCanvas() {
 	S.container.appendChild( S.renderer.domElement );
 
 	// Camera setup
-	//S.camera = new THREE.PerspectiveCamera( 45, S.container.innerHeight / S.container.innerWidth, 1, 1000 );
 	S.camera = new THREE.PerspectiveCamera( 45, S.container.offsetHeight / S.container.offsetWidth, 1, 10000 );
-	S.camera.position.z = 400;
-	S.camera.position.x = -400;
-	S.camera.position.y = 400;
+	S.camera.position.z = 200;
+	S.camera.position.x = -200;
+	S.camera.position.y = 200;
 
 	// Controls setup
 	S.controls = new THREE.OrbitControls( S.camera, S.container );
@@ -101,11 +100,12 @@ function updateMesh() {
 
 function processGeometry() {
     
-    var controller, 
+    var controller, p, 
         gui = new dat.GUI();
 
 	for ( var i = 0; i <  _paramslist.length; i++ ) {
 		p = _paramslist[ i ];
+		console.log( p.min, p.max, p.value );
 		controller = gui.add( U.params, p.name, p.min, p.max );
 		controller.onFinishChange( function(value) {
 		    updateMesh();

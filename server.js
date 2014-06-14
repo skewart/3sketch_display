@@ -20,7 +20,7 @@ function cleanUpParams( params ) {
         p.min = parseFloat( p.min );
         p.max = parseFloat( p.max );
         p.step = parseFloat( p.step );
-        p.value = ( p.max - p.min ) / 2 ;
+        p.value = p.min + ( p.max - p.min ) / 2 ;
     }
     return params;
 }
