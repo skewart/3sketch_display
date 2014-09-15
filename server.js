@@ -32,6 +32,10 @@ app.post('/_display', function(req, res) {
     res.render('scene', { jsCode: jsCode, geoParams: geoParams });
 });
 
+app.get('/', function( req, res) {
+    res.send('Hello from 3sketch-display'); 
+});
+
 var server = app.listen( process.env.PORT, function() {
     console.log('listening on port ' + process.env.PORT );
 });

@@ -15,6 +15,13 @@ function animate() {
 }
 
 
+// A tiny helper function for something that you'd think would be built in.
+function round( n, p ) {
+	var nmp = n % p;
+	return ( nmp >= p/2 ) ? n + p - nmp : n - nmp;
+}
+
+
 // Sets up the function (and possibly any other stuff needed) for the User data function
 function setupU() {
     // TODO Check and handle bad state in U object
@@ -25,14 +32,14 @@ function setupU() {
     for ( var i = 0; i < _paramslist.length; i++ ) {
         p = _paramslist[i].name
         args.push( p );
-        U.params[ p ] = _paramslist[i].value;
+        U.params[ p ] = round( _paramslist[i].value, _paramslist[i].step );
     }
     
     U.func = (function() {
         var window = {},
             document = {};
         var uf = function() { return new THREE.CubeGeometry(10,10,10) } // Default behavior - TODO change to some 3d error message
-        eval( "uf = function( " + args.join(",") + ") { " + _functext + " }" )
+        eval( "uf = function( " + args.join(",") + ") { " + _functext + " }" );
         return uf;
     })()
     
@@ -83,7 +90,7 @@ function updateMesh() {
 	
     for ( var i = 0, len = _paramslist.length; i < len; i++ ) {
         pname = _paramslist[i].name;
-        argVals.push( U.params[ pname ] );
+        argVals.push( round( U.params[ pname ], _paramslist[i].step ) );
     }
 	
 	if (S.mesh) {
@@ -108,6 +115,7 @@ function processGeometry() {
 		console.log( p.min, p.max, p.value );
 		controller = gui.add( U.params, p.name, p.min, p.max );
 		controller.onFinishChange( function(value) {
+			console.log( "updating mesh with new value --> " + value );
 		    updateMesh();
 		})
 	}
