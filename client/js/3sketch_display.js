@@ -105,21 +105,37 @@ function updateMesh() {
 }
 
 
+// Extracts the THREE.Geometry object from the scene, converts it to STL
+// and triggers the browser to download it.
+function download_STL() {
+	var blob = new Blob( [ stlFromGeometry( S.mesh.geometry ) ] ),
+		objURL = URL.createObjectURL( blob ),
+		a = document.createElement('a');
+	
+	a.style = "display:none;";
+	a.download = 'myFile.stl';
+	a.href = objURL;
+	
+	a.click();
+	
+	URL.revokeObjectURL( objURL );
+}
+
 function processGeometry() {
     
     var controller, p, 
         gui = new dat.GUI();
-
+	
 	for ( var i = 0; i <  _paramslist.length; i++ ) {
 		p = _paramslist[ i ];
 		console.log( p.min, p.max, p.value );
 		controller = gui.add( U.params, p.name, p.min, p.max );
 		controller.onFinishChange( function(value) {
-			console.log( "updating mesh with new value --> " + value );
 		    updateMesh();
 		})
 	}
-
+	// Add a button to download an STL of the object
+	gui.add( window, 'download_STL' );
 }
 
 
